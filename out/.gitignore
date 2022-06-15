@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+# Rust build files
+contract/target/**
+# Except this file
+!.gitignore
