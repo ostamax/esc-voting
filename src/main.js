@@ -19,10 +19,10 @@ async function connect(nearConfig) {
   // Initializing our contract APIs by contract name and configuration.
   window.contract = await new nearAPI.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read-only – they don't modify the state, but usually return some value
-    viewMethods: ['new','get_scoreboard'],
+    viewMethods: ['new','get_scoreboard', 'get_list_of_voters', 'get_voting_by_name', 'is_voter_existing'],
     // Change methods can modify the state, but you don't receive the returned value when called
     // changeMethods: ['new', 'check_map_length', 'check_input_list', 'update_scoreboard', 'update_scoreboard_with_list'],
-    changeMethods: ['update_scoreboard_with_list'],
+    changeMethods: ['update_scoreboard_with_list', 'insert_new_voter'],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
     sender: window.walletConnection.getAccountId()
@@ -49,12 +49,39 @@ function updateUI(page_type) {
   if (!window.walletConnection.getAccountId()) {
     
     Array.from(document.querySelectorAll('.sign-in')).map(it => it.style = 'display: block;');
+    
+    
   } else if (page_type != "after-voting"){
+
+    var v_name = window.walletConnection.getAccountId();
+
+    contract.is_voter_existing({voter: v_name}).then(result => {
+
+      if (result == false) {
+        // contract.insert_new_voter({new_voter: v_name});
+      } else {
+        contract.get_voting_by_name({name: window.walletConnection.getAccountId()}).then(result => {
+          console.log(result);
+          show_old_voting(result);
+          document.querySelectorAll('select').forEach(select => select.disabled = true);
+          document.querySelector('#vote').disabled = true;
+        });    
+      }
+      
+    });
+    console.log(contract.get_list_of_voters());
+
+    console.log('sdfsdfsd', window.walletConnection.getAccountId());
+    // console.log(contract.get_voting_by_name({name: window.walletConnection.getAccountId()}));
+
     Array.from(document.querySelectorAll('.after-sign-in')).map(it => it.style = 'display: block;');
     document.querySelectorAll('button').forEach(button => button.disabled = false);
   }
   else {
     Array.from(document.querySelectorAll('.after-sign-in .column')).map(it => it.style = 'display: block;');
+    var v_name = window.walletConnection.getAccountId();
+
+
     document.getElementById("scoreboard").style.display="block";
     document.querySelectorAll('button').forEach(button => button.disabled = false);
   }
@@ -79,6 +106,24 @@ function insert_values_to_table(scoreboardMap) {
   }
 }
 
+function check_input_array_uniqueness(input_array) {
+  if (new Set(input_array).size == 10) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function show_old_voting(input_array) {
+  var pointsArray = ['12', '10', '8', '7', '6', '5', '4', '3', '2', '1'];
+  var pointsArrayLength = pointsArray.length;
+  for (var i = 0; i < pointsArrayLength; i++) {
+    var country = input_array[i];
+    console.log("sfs", country);
+    document.getElementById(pointsArray[i]).value = country;
+  }
+}
+
 // Log in user using NEAR Wallet on "Sign In" button click
 document.querySelector('.sign-in .btn').addEventListener('click', () => {
   walletConnection.requestSignIn(nearConfig.contractName, 'Rust Counter Example');
@@ -90,11 +135,16 @@ document.querySelector('.after-sign-in .column .btn').addEventListener('click', 
   contract.get_scoreboard().then(result => {
     console.log(result['Cyprus']);
     insert_values_to_table(new Map(Object.entries(result)));
+    
     updateUI("after-voting");}).catch(err => errorHelper(err));
+    var v_name = window.walletConnection.getAccountId();
+    contract.insert_new_voter({new_voter: v_name});
+    console.log(contract.get_list_of_voters());
 });
 
 document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{
   document.querySelectorAll('button').forEach(button => button.disabled = true);
+  
   var pointsArray = ['12', '10', '8', '7', '6', '5', '4', '3', '2', '1'];
   var pointsArrayLength = pointsArray.length;
   var resultsArray = [];
@@ -105,11 +155,17 @@ document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{
   }
   
   console.log(resultsArray);
-  contract.update_scoreboard_with_list({input_list: resultsArray}).then(_ => {
-    console.log('Succeed');
-    updateUI("after-voting");
-  });
- 
+  if (check_input_array_uniqueness(resultsArray)) {
+    contract.update_scoreboard_with_list({input_list: resultsArray, voter: window.walletConnection.getAccountId()}).then(_ => {
+      console.log('Succeed');
+      updateUI("after-voting");
+    });
+  } else {
+    window.confirm("Erro!");
+    document.querySelectorAll('button').forEach(button => button.disabled = false);
+  }
+
+  // console.log(contract.get_voting_by_name({name: window.walletConnection.getAccountId()}));
 });
 
 document.querySelector('.sign-out .btn').addEventListener('click', () => {
