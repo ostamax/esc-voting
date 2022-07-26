@@ -4,6 +4,7 @@
 //! 
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::{env, near_bindgen, PanicOnDefault};
+use std::hash::Hash;
 use std::string::String;
 use std::collections::HashMap;
 use itertools::enumerate;
@@ -11,6 +12,8 @@ use itertools::enumerate;
 #[derive(BorshDeserialize, BorshSerialize, Default)]
 pub struct EscVoting {
     scoreboard: HashMap<String, u64>,
+    list_of_voters: Vec<String>,
+    voting_history: HashMap<String, Vec<String>>,
 }
 
 #[near_bindgen]
@@ -31,7 +34,33 @@ impl EscVoting {
                 (String::from("Sweden"), 0),
                 (String::from("Switzerland"), 0),
                 ]),
+            list_of_voters: Vec::new(),
+            voting_history: HashMap::new(),
          }
+    }
+
+    pub fn get_list_of_voters(&self) -> Vec<String> {
+        return self.list_of_voters.clone()
+    }
+
+    pub fn insert_new_voter(&mut self, new_voter: String) {
+        self.list_of_voters.push(new_voter);
+    }
+
+    pub fn is_voter_existing(&self, voter: String) -> bool {
+        if self.list_of_voters.contains(&voter) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    pub fn get_voting_by_name(&self, name: String) -> Vec<String> {
+        self.voting_history.get(&name).unwrap().clone()
+    }
+
+    pub fn insert_new_voting(&mut self, new_voter: String, votes: Vec<String>) {
+        self.voting_history.insert(new_voter, votes);
     }
 
     pub fn check_map_length(&self, input_map: HashMap<String, u64>) -> bool {
@@ -70,7 +99,7 @@ impl EscVoting {
 
     }
 
-    pub fn update_scoreboard_with_list(&mut self, input_list: Vec<String>) {
+    pub fn update_scoreboard_with_list(&mut self, input_list: Vec<String>, voter: String) {
         let list_to_insert = input_list.clone();
         let points: [u64; 10] = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];
         for (idx, country) in enumerate(list_to_insert) {
@@ -81,6 +110,7 @@ impl EscVoting {
                 self.scoreboard.insert(country, points[idx]);
             }
         }
+        self.voting_history.insert(voter, input_list);
     }
 
     pub fn get_scoreboard(&self) -> HashMap<String, u64> {
@@ -217,7 +247,31 @@ mod tests {
             (String::from("Sweden"), 2),
             (String::from("Switzerland"), 1),
             ]);
-        contract.update_scoreboard_with_list(input_list);
+        contract.update_scoreboard_with_list(input_list, String::from("M"));
         assert_eq!(contract.scoreboard, map_to_compare)
+    }
+
+    #[test]
+    pub fn  get_and_insert_voting_by_name() {
+        let context = VMContextBuilder::new();
+        testing_env!(context.build());
+        let mut contract = EscVoting::new();
+        let input_list = vec![String::from("Ukraine"), String::from("Denmark"), String::from("The Netherlands"),
+                                    String::from("Greece"), String::from("Cyprus"), String::from("Romania"), 
+                                    String::from("Croatia"), String::from("Portugal"), String::from("Sweden"), String::from("Switzerland")];
+
+        contract.insert_new_voting(String::from("M"), input_list.clone());
+
+        assert_eq!(contract.get_voting_by_name(String::from("M")), input_list);
+
+
+    }
+
+    #[test]
+    pub fn is_voter_existing() {
+        let context = VMContextBuilder::new();
+        testing_env!(context.build());
+        let mut contract = EscVoting::new();
+        assert_eq!(contract.is_voter_existing(String::from("user.testnet")), false);
     }
 }
