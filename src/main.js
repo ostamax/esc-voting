@@ -65,6 +65,7 @@ function updateUI(page_type) {
           show_old_voting(result);
           document.querySelectorAll('select').forEach(select => select.disabled = true);
           document.querySelector('#vote').disabled = true;
+          Array.from(document.querySelectorAll('.after-sign-in .column')).map(it => it.style = 'display: block;');
         });    
       }
       
@@ -80,6 +81,7 @@ function updateUI(page_type) {
   else {
     Array.from(document.querySelectorAll('.after-sign-in .column')).map(it => it.style = 'display: block;');
     var v_name = window.walletConnection.getAccountId();
+
 
 
     document.getElementById("scoreboard").style.display="block";
