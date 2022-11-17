@@ -19,10 +19,10 @@ async function connect(nearConfig) {
   // Initializing our contract APIs by contract name and configuration.
   window.contract = await new nearAPI.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read-only – they don't modify the state, but usually return some value
-    viewMethods: ['new','get_scoreboard', 'get_list_of_voters', 'get_voting_by_name', 'is_voter_existing'],
+    viewMethods: ['new','get_scoreboard', 'get_list_of_voters', 'get_voting_by_name', 'is_voter_exist'],
     // Change methods can modify the state, but you don't receive the returned value when called
     // changeMethods: ['new', 'check_map_length', 'check_input_list', 'update_scoreboard', 'update_scoreboard_with_list'],
-    changeMethods: ['update_scoreboard_with_list', 'insert_new_voter'],
+    changeMethods: ['update_scoreboard_with_list'],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
     sender: window.walletConnection.getAccountId()
@@ -55,7 +55,7 @@ function updateUI(page_type) {
 
     var v_name = window.walletConnection.getAccountId();
 
-    contract.is_voter_existing({voter: v_name}).then(result => {
+    contract.is_voter_exist({voter: v_name}).then(result => {
 
       if (result == false) {
         // contract.insert_new_voter({new_voter: v_name});
@@ -140,7 +140,7 @@ document.querySelector('.after-sign-in .column .btn').addEventListener('click', 
     
     updateUI("after-voting");}).catch(err => errorHelper(err));
     var v_name = window.walletConnection.getAccountId();
-    contract.insert_new_voter({new_voter: v_name});
+    // contract.insert_new_voter({new_voter: v_name});
     console.log(contract.get_list_of_voters());
 });
 

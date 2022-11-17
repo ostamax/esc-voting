@@ -63,9 +63,9 @@ mod tests {
     use near_sdk::testing_env;
     use near_sdk::MockedBlockchain;
     use std::any::type_name;
-    fn to_valid_account(account: &str) -> ValidAccountId {
-        ValidAccountId::try_from(account.to_string()).expect("Invalid account")
-    }
+    // fn to_valid_account(account: &str) -> ValidAccountId {
+    //     ValidAccountId::try_from(account.to_string()).expect("Invalid account")
+    // }
 
     // part of writing unit tests is setting up a mock context
     // provide a `predecessor` here, it'll modify the default context
