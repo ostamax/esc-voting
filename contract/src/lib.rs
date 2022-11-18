@@ -40,7 +40,7 @@ impl EscVoting {
     pub fn is_voter_exist(&self, voter: String) -> bool {
         self.voting_history.get(&voter) != None
     }
-
+    #[payable]
     pub fn update_scoreboard_with_list(&mut self, input_list: Vec<String>, voter: String) {
         let list_to_insert = input_list.clone();
         let points: [u64; 10] = [12, 10, 8, 7, 6, 5, 4, 3, 2, 1];

@@ -2,6 +2,8 @@ import "regenerator-runtime/runtime";
 import * as nearAPI from "near-api-js";
 import getConfig from "./config";
 const nearConfig = getConfig(process.env.NODE_ENV || "development");
+// Price for the voting (1 NEAR token)
+const votingPrice = "1000000000000000000000000"
 console.log(nearConfig);
 async function connect(nearConfig) {
   // Connects to NEAR and provides `near`, `walletAccount` and `contract` objects in `window` scope
@@ -45,55 +47,6 @@ function errorHelper(err) {
   console.error(err);
 }
 
-// function updateUI(page_type) {
-//   console.log(page_type);
-//   if (!window.walletConnection.getAccountId()) {
-    
-//     Array.from(document.querySelectorAll('.sign-in')).map(it => it.style = 'display: block;');
-    
-    
-//   } else if (page_type != "after-voting"){
-
-//     var v_name = window.walletConnection.getAccountId();
-
-//     contract.is_voter_exist({voter: v_name}).then(result => {
-
-//       if (result == false) {
-//         // contract.insert_new_voter({new_voter: v_name});
-//       } else {
-//         contract.get_voting_by_name({name: window.walletConnection.getAccountId()}).then(result => {
-//           console.log(result);
-//           show_old_voting(result);
-//           document.querySelectorAll('select').forEach(select => select.disabled = true);
-//           document.querySelector('#vote').disabled = true;
-//           Array.from(document.querySelectorAll('.after-voting .column')).map(it => it.style = 'display: block;');
-//         });    
-//       }
-      
-//     });
-//     console.log(contract.get_list_of_voters());
-
-//     console.log('sdfsdfsd', window.walletConnection.getAccountId());
-//     // console.log(contract.get_voting_by_name({name: window.walletConnection.getAccountId()}));
-
-//     Array.from(document.querySelectorAll('.after-sign-in')).map(it => it.style = 'display: block;');
-//     document.querySelectorAll('button').forEach(button => button.disabled = false);
-//   }
-//   else {
-//     Array.from(document.querySelectorAll('.after-sign-in .column')).map(it => it.style = 'display: block;');
-//     var v_name = window.walletConnection.getAccountId();
-
-
-
-//     document.getElementById("scoreboard").style.display="block";
-//     document.querySelectorAll('button').forEach(button => button.disabled = false);
-//     contract.is_voter_exist({voter: v_name}).then(result => {
-//       if (result == false) {
-//         document.querySelector('#vote').disabled = true;
-//       }
-//     });
-//   }
-// }
 function updateUI(){
   console.log(window.walletConnection.getAccountId())
 
@@ -101,14 +54,6 @@ function updateUI(){
   if (!window.walletConnection.getAccountId()) {    
         Array.from(document.querySelectorAll('.sign-in')).map(it => it.style = 'display: block;');        
   } else {
-    // hide the results part!
-    // Array.from(document.querySelector('.after-sign-in')).map(it => it.style = 'display: none;');
-    // document.getElementById("voting").display = "block";
-    // document.querySelector('.after-sign-in').visibility = 'hidden';
-    // console.log(document.querySelector('.after-sign-in').display);
-    // Array.from(document.querySelector('.after-sign-in')).map(it => it.style = 'display: none;');
-    // Array.from(document.querySelectorAll('.after-sign-in .results')).map(it => it.style = 'display: none;');
-    // document.getElementsByClassName('.after-sign-in .voting').display = 'none';
     var voter_name = window.walletConnection.getAccountId();
     contract.is_voter_exist({voter: voter_name}).then(result => {
       if (result == true) {
@@ -201,13 +146,12 @@ document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{
   
   console.log(resultsArray);
   if (check_input_array_uniqueness(resultsArray)) {
-    contract.update_scoreboard_with_list({input_list: resultsArray, voter: window.walletConnection.getAccountId()}).then(_ => {
+    contract.update_scoreboard_with_list({input_list: resultsArray, voter: window.walletConnection.getAccountId()}, "", votingPrice).then(_ => {
       console.log('Succeed');
       updateUI();
     });
   } else {
-    window.confirm("Erro!");
-    // document.querySelectorAll('button').forEach(button => button.disabled = false);
+    window.confirm("Error!");
   }
 
   console.log(contract.get_list_of_voters());
