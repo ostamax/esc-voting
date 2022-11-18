@@ -316,13 +316,13 @@
       .loader:after {
         left: 1.5em;
       }
-      .column {
+      .voting {
         float: left;
         width: 50%;
         padding: 10px;
         
       }
-      .column1 {
+      .results {
         float: left;
         width: 50%;
         padding: 10px;
@@ -357,302 +357,294 @@
 <body style="background: #eef2fe; font-family: 'Arvo', serif;">
   <div class="container">
     <h1>This is a Eurovision Song Contest voting simulator on blockchain!</h1>
-
+    
     <div class="sign-in" style="display: none;">
       <p>You'll need to sign in to call contract methods:</p>
-      <button class="btn btn-primary" style="background-color: #0072CE;">Sign In</button>
+      <button id="sign-in-button" class="btn btn-primary" style="background-color: #0072CE;">Sign In</button>
     </div>
-
-    <div class="after-sign-in" style="display: none;">
-      <div class="column1" style="background-color:#aaa;">
+    <div class="after-sign-in">
+      <div id="voting" class="voting" style="background-color:#aaa; display: none;">
         <h4>Welcome to the voting page!</h4>
-
-      <label for="12">12 points: </label>
-      <select name="12" id="12">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="10">10 points: </label>
-      <select name="10" id="10">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="8">8 points: </label>
-      <select name="8" id="8">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="7">7 points: </label>
-      <select name="7" id="7">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="6">6 points: </label>
-      <select name="6" id="6">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="5">5 points: </label>
-      <select name="5" id="5">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="4">4 points: </label>
-      <select name="4" id="4">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="3">3 points: </label>
-      <select name="3" id="3">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="2">2 points: </label>
-      <select name="2" id="2">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <label for="1">1 point: </label>
-      <select name="1" id="1">
-        <option value="Albania">Albania</option>
-        <option value="Austria">Austria</option>
-        <option value="Belgium">Belgium</option>
-        <option value="Bulgaria">Bulgaria</option>
-        <option value="Croatia">Croatia</option>
-        <option value="Cyprus">Cyprus</option>
-        <option value="Denmark">Denmark</option>
-        <option value="Estonia">Estonia</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-        <option value="Greece">Greece</option>
-        <option value="Italy">Italy</option>
-        <option value="Latvia">Latvia</option>
-        <option value="Norway">Norway</option>
-        <option value="Portugal">Portugal</option>
-        <option value="Romania">Romania</option>
-        <option value="Spain">Spain</option>
-        <option value="Sweden">Sweden</option>
-        <option value="Switzerland">Switzerland</option>
-        <option value="The Netherlands">The Netherlands</option>
-        <option value="The United Kingdom">The United Kingdom</option>
-        <option value="Ukraine">Ukraine</option>
-      </select>
-      <br>
-      <button id="vote" class="btn btn-primary" style="background-color: #0072CE;">Vote!!</button>
-      <div class="sign-out">
-        <button class="btn btn-primary" style="background-color: #0072CE;">Sign Out</button>
+        <label for="12">12 points: </label>
+        <select name="12" id="12">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="10">10 points: </label>
+        <select name="10" id="10">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="8">8 points:</label>
+        <select name="8" id="8">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="7">7 points: </label>
+        <select name="7" id="7">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="6">6 points: </label>
+        <select name="6" id="6">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="5">5 points: </label>
+        <select name="5" id="5">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="4">4 points: </label>
+        <select name="4" id="4">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="3">3 points: </label>
+        <select name="3" id="3">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="2">2 points: </label>
+        <select name="2" id="2">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <label for="1">1 point: </label>
+        <select name="1" id="1">
+          <option value="Albania">Albania</option>
+          <option value="Austria">Austria</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Italy">Italy</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Norway">Norway</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Romania">Romania</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="The Netherlands">The Netherlands</option>
+          <option value="The United Kingdom">The United Kingdom</option>
+          <option value="Ukraine">Ukraine</option>
+        </select>
+        <br>
+        <button id="vote" class="btn btn-primary" style="background-color: #0072CE;">Vote!!</button>
+        <div class="sign-out">
+          <button class="btn btn-primary" style="background-color: #0072CE;">Sign Out</button>
+        </div>
       </div>
-      </div>
-      <div class="column" style="background-color:#bbb; display: none;">
+      <div class="results" style="display: none;">
         <h4>Scoreboard with results</h4>
         <button class="btn btn-primary" style="background-color: #0072CE;">View results</button>
-        
-        <table id="scoreboard" style="display: none;">
+        <table id="scoreboard">
           <tr>
             <th>Country</th>
             <th>Points</th>
           </tr>
         </table>
+
+      </div>
       </div>
     </div>
-    <div class="after-voting" style="display: none;">
-      <p>Welcome to the page with the voting results!</p>
-      <div class="sign-out">
-        <button class="btn btn-primary" style="background-color: #0072CE;">Sign Out</button>
-      </div>
-    </div>
-
-
   </div>
   <script src="./main.js"></script>
 </body>
+
 </html>
