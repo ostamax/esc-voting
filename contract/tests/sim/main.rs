@@ -1,27 +1,27 @@
 pub use near_sdk::json_types::{Base64VecU8, ValidAccountId, WrappedDuration, U64};
 use near_sdk::serde_json::json;
-use near_sdk_sim::{call, view, deploy, init_simulator, ContractAccount, UserAccount};
+use near_sdk_sim::{call, deploy, init_simulator, view, ContractAccount, UserAccount};
 use rust_counter_tutorial::EscVoting;
 
-near_sdk_sim::lazy_static_include::lazy_static_include_bytes! {
-    COUNTER_BYTES => "../out/main.wasm",
-}
+// near_sdk_sim::lazy_static_include::lazy_static_include_bytes! {
+//     COUNTER_BYTES => "../out/main.wasm",
+// }
 
-pub const DEFAULT_GAS: u64 = 300_000_000_000_000;
+// pub const DEFAULT_GAS: u64 = 300_000_000_000_000;
 
-fn init() -> (UserAccount, ContractAccount<EscVoting>) {
-    let root = init_simulator(None);
+// fn init() -> (UserAccount, ContractAccount<EscVoting>) {
+//     let root = init_simulator(None);
 
-    // Deploy the compiled Wasm bytes
-    let counter: ContractAccount<EscVoting> = deploy!(
-         contract: EscVoting,
-         contract_id: "counter".to_string(),
-         bytes: &COUNTER_BYTES,
-         signer_account: root
-     );
+//     // Deploy the compiled Wasm bytes
+//     let counter: ContractAccount<EscVoting> = deploy!(
+//         contract: EscVoting,
+//         contract_id: "counter".to_string(),
+//         bytes: &COUNTER_BYTES,
+//         signer_account: root
+//     );
 
-    (root, counter)
-}
+//     (root, counter)
+// }
 
 // #[test]
 // fn simulate_increment() {
