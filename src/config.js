@@ -1,5 +1,4 @@
 const CONTRACT_NAME = process.env.CONTRACT_NAME || 'asdf.test'; /* TODO: change this to your account */
-console.log('sfs', CONTRACT_NAME);
 function getConfig (env) {
   switch (env) {
     case 'production':
