@@ -26,6 +26,9 @@ dist/
 # IDE files
 .idea
 
+# VSCode files
+.vscode
+
 # Rust build files
 contract/target/**
 

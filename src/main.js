@@ -1,10 +1,12 @@
 import "regenerator-runtime/runtime";
 import * as nearAPI from "near-api-js";
 import getConfig from "./config";
+
 const nearConfig = getConfig(process.env.NODE_ENV || "development");
+
 // Price for the voting (1 NEAR token)
 const votingPrice = "1000000000000000000000000"
-console.log(nearConfig);
+
 async function connect(nearConfig) {
   // Connects to NEAR and provides `near`, `walletAccount` and `contract` objects in `window` scope
   // Initializing connection to the NEAR node.
@@ -23,14 +25,13 @@ async function connect(nearConfig) {
     // View methods are read-only – they don't modify the state, but usually return some value
     viewMethods: ['new','get_scoreboard', 'get_list_of_voters', 'get_voting_by_name', 'is_voter_exist'],
     // Change methods can modify the state, but you don't receive the returned value when called
-    // changeMethods: ['new', 'check_map_length', 'check_input_list', 'update_scoreboard', 'update_scoreboard_with_list'],
     changeMethods: ['update_scoreboard_with_list'],
     // Sender is the account ID to initialize transactions.
     // getAccountId() will return empty string if user is still unauthorized
     sender: window.walletConnection.getAccountId()
   });
 }
-console.log(window.contract);
+
 function errorHelper(err) {
   // if there's a cryptic error, provide more helpful feedback and instructions here
   // TODO: as soon as we get the error codes propagating back, use those
@@ -47,37 +48,39 @@ function errorHelper(err) {
   console.error(err);
 }
 
+/**
+ * Updates the user interface
+ */
 function updateUI(){
-  console.log(window.walletConnection.getAccountId())
-
   // if we haven't signed in yet
   if (!window.walletConnection.getAccountId()) {    
         Array.from(document.querySelectorAll('.sign-in')).map(it => it.style = 'display: block;');        
   } else {
+    // get account name
     var voter_name = window.walletConnection.getAccountId();
+    // check whether account has already voted
     contract.is_voter_exist({voter: voter_name}).then(result => {
       if (result == true) {
-        
-        console.log("exist");
+        // get account's votes and show them 
         contract.get_voting_by_name({name: window.walletConnection.getAccountId()}).then(result => {
-          console.log(result);
           show_old_voting(result);
         }); 
-
         document.querySelector('#vote').disabled = true;
         document.querySelectorAll('select').forEach(select => select.disabled = true);
-        // Array.from(document.querySelectorAll('.after-sign-in')).map(it => it.style = 'display: block;');
         Array.from(document.querySelectorAll('.after-sign-in .voting')).map(it => it.style = 'display: block;');
         Array.from(document.querySelectorAll('.after-sign-in .results')).map(it => it.style = 'display: block;');
 
       } else {
-        console.log("a new one")
         Array.from(document.querySelectorAll('.after-sign-in .voting')).map(it => it.style = 'display: block;');
       }
     });
   }
 }
 
+/**
+ * Inserts voting results from HashMap to the table
+ * @param {Map} scoreboardMap - HashMap with voting results
+ */
 function insert_values_to_table(scoreboardMap) {
   const sortedScoreboardMap = new Map([...scoreboardMap].sort((a, b) => b[1] - a[1]));
   var table = document.getElementById("scoreboard");
@@ -97,6 +100,11 @@ function insert_values_to_table(scoreboardMap) {
   }
 }
 
+/**
+ * Checks whether the input array has unique values
+ * @param {Array} input_array - array with coutries' names
+ * @returns {bool} - boolean value input array has unique values or not
+ */
 function check_input_array_uniqueness(input_array) {
   if (new Set(input_array).size == 10) {
     return true;
@@ -105,12 +113,15 @@ function check_input_array_uniqueness(input_array) {
   }
 }
 
+/**
+ * Shows the voting made by account before. Set values to the drop-down list objects.
+ * @param {Array} input_array - array with coutries' names
+ */
 function show_old_voting(input_array) {
   var pointsArray = ['12', '10', '8', '7', '6', '5', '4', '3', '2', '1'];
   var pointsArrayLength = pointsArray.length;
   for (var i = 0; i < pointsArrayLength; i++) {
     var country = input_array[i];
-    console.log("sfs", country);
     document.getElementById(pointsArray[i]).value = country;
   }
 }
@@ -120,21 +131,16 @@ document.querySelector('.sign-in .btn').addEventListener('click', () => {
   walletConnection.requestSignIn(nearConfig.contractName, 'Rust Counter Example');
 });
 
+// On "View results" button click
 document.querySelector('.after-sign-in .results .btn').addEventListener('click', () =>{
-  // document.querySelectorAll('button').forEach(button => button.disabled = true);
-
  contract.get_scoreboard().then(result => {
-    insert_values_to_table(new Map(Object.entries(result)));
-    
+    insert_values_to_table(new Map(Object.entries(result)));  
+    document.querySelector('#scoreboard').style.display = 'block';
     updateUI();}).catch(err => errorHelper(err));
-    var v_name = window.walletConnection.getAccountId();
-    // contract.insert_new_voter({new_voter: v_name});
-    console.log(contract.get_list_of_voters());
 });
 
-document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{
-  // document.querySelectorAll('button').forEach(button => button.disabled = true);
-  
+// On "Vote" button click
+document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{ 
   var pointsArray = ['12', '10', '8', '7', '6', '5', '4', '3', '2', '1'];
   var pointsArrayLength = pointsArray.length;
   var resultsArray = [];
@@ -144,17 +150,13 @@ document.querySelector('.after-sign-in .btn').addEventListener('click', () =>{
     resultsArray.push(document.getElementById(pointsArray[i])[id_selected].value)
   }
   
-  console.log(resultsArray);
   if (check_input_array_uniqueness(resultsArray)) {
     contract.update_scoreboard_with_list({input_list: resultsArray, voter: window.walletConnection.getAccountId()}, "", votingPrice).then(_ => {
-      console.log('Succeed');
       updateUI();
     });
   } else {
-    window.confirm("Error!");
+    window.confirm("Error! Selected countries should be unique!");
   }
-
-  console.log(contract.get_list_of_voters());
 });
 
 document.querySelector('.after-sign-in .voting .sign-out .btn').addEventListener('click', () => {

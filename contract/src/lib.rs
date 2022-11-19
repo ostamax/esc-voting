@@ -4,9 +4,8 @@
 //!
 use itertools::enumerate;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{env, near_bindgen, PanicOnDefault};
+use near_sdk::{near_bindgen};
 use std::collections::HashMap;
-use std::hash::Hash;
 use std::string::String;
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, Default)]
@@ -40,6 +39,7 @@ impl EscVoting {
     pub fn is_voter_exist(&self, voter: String) -> bool {
         self.voting_history.get(&voter) != None
     }
+
     #[payable]
     pub fn update_scoreboard_with_list(&mut self, input_list: Vec<String>, voter: String) {
         let list_to_insert = input_list.clone();
@@ -62,10 +62,6 @@ mod tests {
     use near_sdk::test_utils::VMContextBuilder;
     use near_sdk::testing_env;
     use near_sdk::MockedBlockchain;
-    use std::any::type_name;
-    // fn to_valid_account(account: &str) -> ValidAccountId {
-    //     ValidAccountId::try_from(account.to_string()).expect("Invalid account")
-    // }
 
     // part of writing unit tests is setting up a mock context
     // provide a `predecessor` here, it'll modify the default context
@@ -83,7 +79,7 @@ mod tests {
     pub fn test_get_scoreboard() {
         let context = VMContextBuilder::new();
         testing_env!(context.build());
-        let mut contract = EscVoting::new();
+        let contract = EscVoting::new();
         assert_eq!(
             type_of(&contract.get_scoreboard()),
             "std::collections::hash::map::HashMap<alloc::string::String, u64>"
@@ -94,7 +90,7 @@ mod tests {
     pub fn test_list_of_voters() {
         let context = VMContextBuilder::new();
         testing_env!(context.build());
-        let mut contract = EscVoting::new();
+        let contract = EscVoting::new();
         assert_eq!(
             type_of(&contract.get_list_of_voters()),
             "alloc::vec::Vec<alloc::string::String>"
