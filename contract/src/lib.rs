@@ -23,23 +23,28 @@ impl EscVoting {
             voting_history: HashMap::new(),
         }
     }
-
+    
+    // Public read-only method: Returns the final scoreboard.
     pub fn get_scoreboard(&self) -> HashMap<String, u64> {
         return self.scoreboard.clone();
     }
 
+    // Public read-only method: Returns the list of countries were voted for by user.
     pub fn get_voting_by_name(&self, name: String) -> Vec<String> {
         self.voting_history.get(&name).unwrap().clone()
     }
 
+    // Public read-only method: Returns the list of accounts that have already voted.
     pub fn get_list_of_voters(&self) -> Vec<String> {
         return self.voting_history.keys().cloned().collect();
     }
 
+    // Public read-only method: Returns whether the account has voted.
     pub fn is_voter_exist(&self, voter: String) -> bool {
         self.voting_history.get(&voter) != None
     }
 
+    // Public method: Updates the scoreboard according to the votes provided by the account.
     #[payable]
     pub fn update_scoreboard_with_list(&mut self, input_list: Vec<String>, voter: String) {
         let list_to_insert = input_list.clone();
@@ -55,6 +60,12 @@ impl EscVoting {
     }
 }
 
+/*
+ * the rest of this file sets up unit tests
+ * to run these, the command will be: `cargo test`
+ */
+
+// use the attribute below for unit tests
 #[cfg(test)]
 mod tests {
     use super::*;
