@@ -1,26 +1,12 @@
-Counter example in Rust
+A Eurovision Song Contest voting simulator on blockchain (NEAR) in Rust
 =================================
-
-[![Open in Gitpod!](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/near-examples/rust-counter)
-
-<!-- MAGIC COMMENT: DO NOT DELETE! Everything above this line is hidden on NEAR Examples page -->
 
 ## Description
 
-This contract implements simple counter backed by storage on blockchain.
-Contract in `contract/src/lib.rs` provides methods to increment / decrement counter and get it's current value or reset.
+This contract implements simple voting (in a ESC manner) backed by storage on blockchain.
+Contract in `contract/src/lib.rs` provides methods to add voting from an account, get final scoreboard, voting by an account, list of voters.
 
-Plus and minus buttons increase and decrease value correspondingly. When button L is toggled, a little light turns on, just for fun. RS button is for reset. LE and RE buttons to let the robot wink at you.
-
-## To Run
-Open in the Gitpod link above or clone the repository.
-
-```
-git clone https://github.com/near-examples/rust-counter
-```
-
-
-## Setup [Or skip to Login if in Gitpod](#login)
+## Setup
 Install dependencies:
 
 ```
@@ -88,7 +74,7 @@ yarn start
 
 ```
 cd contract
-cargo test -- --nocapture
+cargo test
 ```
 
 ## To Explore
@@ -96,11 +82,3 @@ cargo test -- --nocapture
 - `contract/src/lib.rs` for the contract code
 - `src/index.html` for the front-end HTML
 - `src/main.js` for the JavaScript front-end code and how to integrate contracts
-- `src/test.js` for the JS tests for the contract
-
-## To Build the Documentation
-
-```
-cd contract
-cargo doc --no-deps --open
-```
